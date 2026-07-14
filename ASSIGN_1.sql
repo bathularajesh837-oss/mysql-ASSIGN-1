@@ -3,10 +3,10 @@ show tables;
 DESCRIBE actor;
 
 1. Get all customers whose first name starts with 'J' and who are active.
-SELECT *
-FROM customer
+SELECT * FROM customer
 WHERE first_name LIKE 'J%'
-  AND active = 1;
+AND active = 1;
+
 
 2. Find all films where the title contains the word 'ACTION' or the description contains 'WAR'.
 SELECT *
