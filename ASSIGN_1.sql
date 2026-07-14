@@ -96,5 +96,18 @@ ORDER BY rental_rate DESC,
 LIMIT 5;
 
 14. Show all customers along with the total number of rentals they have made, ordered from most to least rentals.
+   SELECT 
+    c.customer_id,
+    c.first_name,
+    c.last_name,
+    COUNT(r.rental_id) AS total_rentals
+FROM customer c
+LEFT JOIN rental r
+    ON c.customer_id = r.customer_id
+GROUP BY 
+    c.customer_id,
+    c.first_name,
+    c.last_name
+ORDER BY total_rentals DESC;
 
 15. List the film titles that have never been rented
