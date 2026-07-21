@@ -60,7 +60,9 @@ ORDER BY
     payment_week;
 
 -- 5. Check if any given year is a leap year or not. You need not consider any table from sakila database. Write within the select query with hardcoded date
-
+SELECT '2024-02-15' AS given_date,
+       IF(DAY(LAST_DAY(CONCAT(YEAR('2024-02-15'), '-02-01'))) = 29,
+          'Leap Year', 'Not a Leap Year') AS result;
 
 -- 6. Display number of days remaining in the current year from today.
 SELECT DATEDIFF(CONCAT(YEAR(CURDATE()), '-12-31'), CURDATE()) AS days_remaining;
