@@ -45,11 +45,29 @@ WHERE f.film_id NOT IN (
 
 -- Q6. Display the customers who rented films in the same month
 --     as customer with ID 5.
+CREATE VIEW customers_same_month_as_cust5 AS
+SELECT DISTINCT c.customer_id, c.first_name, c.last_name, MONTHNAME(r.rental_date) AS rental_month
+FROM customer c
+JOIN rental r ON c.customer_id = r.customer_id
+WHERE MONTH(r.rental_date) IN (
+    SELECT DISTINCT MONTH(rental_date)
+    FROM rental
+    WHERE customer_id = 5
+);
 
+SELECT * FROM customers_same_month_as_cust5;
 
 -- Q7. Find all staff members who handled a payment greater than the
 --     average payment amount.
-   
+CREATE VIEW staff_above_avg_payment AS
+SELECT DISTINCT s.staff_id, s.first_name, s.last_name, p.payment_id, p.amount
+FROM staff s
+JOIN payment p ON s.staff_id = p.staff_id
+WHERE p.amount > (SELECT AVG(amount) FROM payment);
+
+SELECT * FROM staff_above_avg_payment;
+
+
  -- Q8. Show the title and rental duration of films whose rental
 --  duration is greater than the average.
 WITH avg_duration AS (
@@ -61,7 +79,14 @@ FROM film f
 CROSS JOIN avg_duration a
 WHERE f.rental_duration > a.avg_rental_duration;
 
+
 -- Q9. Find all customers who have the same address as customer with ID 1.
+WITH cust1_address AS (
+    SELECT address_id FROM customer WHERE customer_id = 1
+)
+SELECT c.customer_id, c.first_name, c.last_name, c.address_id
+FROM customer c, cust1_address ca
+WHERE c.address_id = ca.address_id;
 
 
 -- Q10. List all payments that are greater than the average of all payments.
